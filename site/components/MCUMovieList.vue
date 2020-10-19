@@ -1,7 +1,8 @@
 <template>
     <div id="mculist">
         <mcu-movie v-bind:movieModel="movieModel" v-for="(item, index) in items" v-bind:key="item.id" 
-            v-bind:movie-id="item.id" v-bind:show="show[index]" v-bind:preset-watched="watched[item.id]"></mcu-movie>
+            v-bind:movie-id="item.id" v-bind:show="show[index]" v-bind:preset-watched="watched[item.id]"
+            v-on:update-watched="updateWatched"></mcu-movie>
     </div>
 </template>
 
@@ -10,7 +11,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import MCUMovie from "./MCUMovie.vue";
 import MovieSeries from '../lib/MovieSeries';
-import { Movie } from "../lib/types";
+import { Movie, WatchMap } from "../lib/types";
 import { VueConstructor } from "vue";
 
 /**
@@ -37,12 +38,16 @@ export const MCUMovieListVue = Vue.extend({
 })
 export default class MCUMovieList extends MCUMovieListVue {
 
-    watched: any = this.movieModel.getMovieWatchedData();
+    watched: WatchMap = this.movieModel.getMovieWatchedData();
 
     show: any = (<Array<boolean>>new Array(this.movieModel.getNumberOfMovies())).fill(false);
     
     get items (): Movie[] {
         return this.movieModel.getMoviesByOrder(this.ordering);
+    }
+
+    updateWatched(id: number, newWatched: boolean) {
+        this.watched[id] = newWatched;
     }
     
     created () {

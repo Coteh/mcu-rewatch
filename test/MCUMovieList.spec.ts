@@ -28,7 +28,10 @@ describe("MCUMovieList", () => {
 
     beforeEach(() => {
         mockGetMovieWatchedData = stub(MovieSeries.prototype, "getMovieWatchedData");
-        mockGetMovieWatchedData.returns([false, false]);
+        mockGetMovieWatchedData.returns({
+            '1': false,
+            '2': false
+        });
 
         movieModelStub = new MovieSeries("test", [], {}, null);
         
@@ -44,7 +47,10 @@ describe("MCUMovieList", () => {
                 }
             },
             mocks: {
-                watched: [false, false],
+                watched: {
+                    '1': false,
+                    '2': false
+                },
                 show: [false, false]
             }
         });
@@ -63,7 +69,10 @@ describe("MCUMovieList", () => {
                 ordering: "test"
             },
             mocks: {
-                watched: [false, false],
+                watched: {
+                    '1': false,
+                    '2': false
+                },
                 show: [false, false]
             }
         });
@@ -82,7 +91,10 @@ describe("MCUMovieList", () => {
                 ordering: "test"
             },
             mocks: {
-                watched: [false, false],
+                watched: {
+                    '1': false,
+                    '2': false
+                },
                 show: [false, false]
             }
         });
@@ -99,12 +111,39 @@ describe("MCUMovieList", () => {
                 ordering: "test"
             },
             mocks: {
-                watched: [false, false],
+                watched: {
+                    '1': false,
+                    '2': false
+                },
                 show: [false, false]
             }
         });
 
         expect(wrapper.vm.items.length).to.equal(0);
+    });
+
+    it("should update watched status for a movie", () => {
+        movieModelStub = new MovieSeries("test", TEST_MOVIES, TEST_ORDERINGS, null);
+
+        wrapper = shallowMount(MCUMovieList, {
+            propsData: {
+                movieModel: movieModelStub,
+                ordering: "test"
+            },
+            mocks: {
+                watched: {
+                    '1': false,
+                    '2': false
+                },
+                show: [false, false]
+            }
+        });
+
+        wrapper.vm.updateWatched(2, true);
+        expect(wrapper.vm.watched).to.deep.equal({
+            '1': false,
+            '2': true
+        });
     });
 
     afterEach(() => {
