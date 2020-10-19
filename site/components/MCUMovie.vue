@@ -14,6 +14,8 @@ import Component from "vue-class-component";
 import MovieSeries from '../lib/MovieSeries';
 import { VueConstructor } from "vue";
 
+const UPDATE_WATCHED_ACTION = "update-watched";
+
 /**
  * Props for the MCU movie component
  */
@@ -46,6 +48,7 @@ export default class MCUMovie extends MCUMovieVue {
         var newWatched = (this.watched) ? false : true;
         this.$set(this, "watched", newWatched);
         this.movieModel.saveWatchedStatus(this.movieId, newWatched);
+        this.$emit(UPDATE_WATCHED_ACTION, this.movieId, newWatched);
     }
 
     created () {

@@ -118,6 +118,22 @@ describe("MCUMovie", () => {
             }
         });
 
+        it("should emit updated watched status event", async () => {
+            movieSeriesMock.expects("saveWatchedStatus").once().withExactArgs(MOVIE_ID_FIXTURE, true);
+            
+            wrapper.setData({
+                watched: false
+            });
+            
+            wrapper.vm.toggleWatch();
+
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.emitted()["update-watched"]).to.be.ok;
+            expect(wrapper.emitted()["update-watched"].length).to.be.equal(1);
+            expect(wrapper.emitted()["update-watched"][0]).to.deep.equal([5, true]);
+        });
+
         afterEach(() => {
             movieSeriesMock.restore();
         });
