@@ -1,7 +1,5 @@
 # mcu-rewatch [![CircleCI](https://circleci.com/gh/Coteh/mcu-rewatch.svg?style=shield)](https://circleci.com/gh/Coteh/mcu-rewatch)[![Netlify Status](https://api.netlify.com/api/v1/badges/31583819-70f1-466e-942d-ce02c04fc7a6/deploy-status)](https://app.netlify.com/sites/mcu-rewatch/deploys)
 
-**[Check it out here!](https://mcu-rewatch.netlify.com/)**
-
 ![Preview](Preview.gif "Preview Image")
 
 A nifty little web application I built to keep track of my MCU rewatch progress in anticipation of the release of Avengers: Endgame.
